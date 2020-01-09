@@ -2,6 +2,7 @@ from typing import List
 
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.routing import APIRoute
+from starlette.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from . import crud, models, schemas
@@ -10,6 +11,19 @@ from .database import SessionLocal, engine
 # models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+# TODO: This is for development. Remove it for production.
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Dependency
