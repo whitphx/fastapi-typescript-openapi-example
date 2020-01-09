@@ -5,6 +5,6 @@ RUN apt-get update && apt-get install -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip install sqlalchemy PyMySQL
+RUN pip install sqlalchemy PyMySQL alembic
 
 COPY ./app /app
