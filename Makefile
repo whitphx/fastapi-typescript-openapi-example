@@ -7,3 +7,7 @@ upgrade:
 
 downgrade:
 	$(BACKEND_CONTEXT) alembic downgrade -1
+
+oapi/gen:
+	docker-compose -f docker-compose.yml -f docker-compose.openapi-generator.yml up openapi-generator \
+	&& docker-compose -f docker-compose.yml -f docker-compose.openapi-generator.yml rm -f openapi-generator

@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import axios from 'axios';
+import { DefaultApi, Configuration, User } from './api-client';
 
-interface User {
-  email: string;
-}
+const config = new Configuration({ basePath: 'http://localhost:8000' }); // TODO: This is for dev
+export const apiClient = new DefaultApi(config);
 
 const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/users/').then(response => {
+    apiClient.readUsers().then((response) => {
       setUsers(response.data);
-    });
+    })
   })
 
   return (
     <div className="App">
       <ul>
         {users.map(user =>
-          <li>{user.email}</li>
+          <li key={user.id}>{user.email}</li>
         )}
       </ul>
     </div>

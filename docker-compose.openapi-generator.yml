@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  openapi-generator:
+    image: openapitools/openapi-generator-cli
+    volumes:
+      - ./frontend:/frontend
+    working_dir: /frontend
+    command:
+      - generate
+      - -g
+      - typescript-axios
+      - -i
+      - http://backend/openapi.json
+      - -o
+      - /frontend/src/api-client
+      - --additional-properties=supportsES6=true,modelPropertyNaming=original
+      # modelPropertyNaming=original is necessary though camelCase is preferred.
+      # See https://github.com/OpenAPITools/openapi-generator/issues/2976
