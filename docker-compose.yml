@@ -6,3 +6,22 @@ services:
     image: tuttieee/fastapi-typescript-sample-backend
     ports:
       - 8000:80
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0.18
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ROOT_HOST=localhost
+    volumes:
+      - ./db:/var/lib/mysql
